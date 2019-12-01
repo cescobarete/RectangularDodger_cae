@@ -1,5 +1,9 @@
 # TriangularDodger_cae
 /*
+javac *.java
+java RectangularDodger
+To use do UP, DOWN, LEFT, and RIGHT arrow keys.
+
 The project was changed to RectangularDodger because I changed the object to a rectangle.
 Version 1 of my project is a rectangle being able to move with
 UP, DOWN, RIGHT and LEFT keys.
