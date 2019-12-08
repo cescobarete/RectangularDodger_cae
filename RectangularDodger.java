@@ -1,3 +1,11 @@
+    /******************************************************************************
+    * Copyright (C) 2019 Christian Escobarete.
+    * 
+    * You are free to reuse the unmodified version of this file in your projects.
+    * You do not have to give credit to the applications author.
+    *****************************************************************************/
+    /**@author Christian Escobarete*/
+
     import javax.swing.JFrame;
     import javax.swing.JPanel;
     import javax.swing.JButton;
@@ -19,11 +27,13 @@
     import java.util.ArrayList;
 
     class RectangularDodger extends JPanel implements ActionListener, KeyListener {
+        //setting a timer
         Timer tm = new Timer(5, this);
+        
         int x=0,y=0,speedX=0,speedY=0;
         private int red, green, blue;
 
-        static Rectangle player = new Rectangle(100,100,100,100);
+        static Rectangle player = new Rectangle();
         static Rectangle object = new Rectangle(375,375,25,25);
 
         static AI AI = new AI(object, player);
@@ -32,11 +42,12 @@
             tm.start();
 
             addKeyListener(this);
+            //indicates if the component can be focused or not
             setFocusable(true);
             setFocusTraversalKeysEnabled(false);
             SetRandomValues();
         }
-
+    
     final public void SetRandomValues() {
         red=GetNumberBetween(0,255);
         green=GetNumberBetween(0,255);
@@ -47,15 +58,16 @@
         Random rand = new Random();
         return min + rand.nextInt(max-min+1);
     }
-
+    //paint AI and player to the frame
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(new Color(red,green,blue));
         g.fillRect(player.x,player.y,50,30);
         AI.draw(g);
+        repaint();
     }
-    
-    //Determine boundaries for rectangle
+    //Determine boundaries for rectangle(player) did not make a boundary for CPU since it follows you and wont
+    //move off screen 
     public void actionPerformed(ActionEvent e) {
         if(player.x<0) {
             speedX=0;
@@ -85,32 +97,35 @@
     //Gives the direction of what key you pressed
     public void keyPressed(KeyEvent e) {
         int c=e.getKeyCode();
-
+        //set left arrow key and its speed
         if(c==KeyEvent.VK_LEFT) {
             speedX=-6;
             speedY=0;
         }
+        //set up arrow key and its speed
         if(c==KeyEvent.VK_UP) {
             speedX=0;
             speedY=-6;
         }
+        //set right arrow key and its speed
         if(c==KeyEvent.VK_RIGHT) {
             speedX=6;
             speedY=0;
         }
+        //set down arrow key and its speed
         if(c==KeyEvent.VK_DOWN) {
             speedX=0;
             speedY=6;
         }
     }
-
+    //not even used for this program
     public void keyTyped(KeyEvent e) {}
-    //Rect will keep moving unless givin a key released to tell it to stop
+    //palyer rect will keep moving unless givin a key released to tell it to stop
     public void keyReleased(KeyEvent e) {
         speedX=0;
         speedY=0;
     }
-     
+    //jframe is threaded 
     class RectangleFrame extends JFrame implements Runnable {
         RectangleFrame() {
             setDefaultLookAndFeelDecorated(true);
@@ -121,7 +136,7 @@
         }
         public void run(){}
     }
-
+    //wanted to leave as little as possible in main method
     public static void main(String[] args) {
         System.out.println("\nRectangularDodger Starting...");
         System.out.println("\nWelcome to Rectangular Dodger");
@@ -138,5 +153,3 @@
         myFrame.setVisible(true);
     }
 }
-    
-
