@@ -14,7 +14,7 @@ public class AI implements Runnable {
     }
     
     public void draw (Graphics g) {
-        g.setColor(Color.BLUE);
+        g.setColor(Color.GRAY);
         if(AI != null) {
             g.fillRect(AI.x,AI.y,AI.width,AI.height);
         }
